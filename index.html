@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Juego de Navidad</title>
+    <style>
+        body {
+            background: url('https://i.imgur.com/RYCYCre.jpeg') no-repeat center center fixed;
+            background-size: cover;
+            color: white;
+            font-family: Arial, sans-serif;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            height: 100vh;
+            margin: 0;
+        }
+        #app {
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            align-items: center;
+            flex-grow: 1;
+        }
+        #app p {
+            font-size: 1.8rem;
+            margin: 20px;
+            background: rgba(0, 0, 0, 0.5);
+            padding: 10px;
+            border-radius: 10px;
+        }
+        #app h1 {
+            font-size: 2.5rem;
+            margin-bottom: 30px;
+        }
+        .button-container {
+            display: flex;
+            justify-content: space-around;
+            width: 100%;
+            margin-top: 20px;
+        }
+        button {
+            background-color: #808080; /* Fondo gris */
+            color: white; /* Letras blancas */
+            margin: 20px;
+            padding: 20px 40px;
+            font-size: 1.8rem;
+            cursor: pointer;
+            border: none;
+            border-radius: 10px;
+            color: white;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            transition: transform 0.2s, background-color 0.2s;
+            width: 40%;
+        }
+        .easy {
+            background-color: #ff4d4d;
+        }
+        .easy:hover {
+            background-color: #ff1a1a;
+            transform: scale(1.1);
+        }
+        .hard {
+            background-color: #4caf50;
+        }
+        .hard:hover {
+            background-color: #388e3c;
+            transform: scale(1.1);
+        }
+    </style>
+</head>
+<body>
+    <script>
+        // Comprobar si el contenido ya fue visto
+        if (localStorage.getItem('hasViewed') === 'true') {
+            document.body.innerHTML = ""; // Borra todo el contenido
+        } else {
+            // Marcar como visto
+            localStorage.setItem('hasViewed', 'true');
+        }
+    </script>
+    <div id="app">
+        <h1>Elige tu camino</h1>
+        <div class="button-container">
+            <button class="easy" onclick="chooseEasy()">Camino Fácil</button>
+            <button class="hard" onclick="chooseHard()">Camino Difícil</button>
+        </div>
+    </div>
+
+    <script>
+        function chooseEasy() {
+            document.body.style.background = "url('https://i.postimg.cc/3NFscdV8/IMG-1116.jpg') no-repeat center center fixed";
+            document.body.style.backgroundSize = "cover";
+            document.getElementById('app').innerHTML = `
+                <p>¿Estás seguro que quieres el camino fácil?</p>
+                <button onclick="endEasy()">Sí</button>
+                <button onclick="endCuriosity()">No</button>
+            `;
+        }
+
+        function endEasy() {
+            document.getElementById('app').innerHTML = `
+                <p>Has acabado aquí.</p>
+            `;
+        }
+
+        function endCuriosity() {
+            document.getElementById('app').innerHTML = `
+                <p>Has acabado aquí. Quédate con la duda 😉.</p>
+            `;
+        }
+
+        function chooseHard() {
+            document.body.style.background = "url('https://i.postimg.cc/3NFscdV8/IMG-1116.jpg') no-repeat center center fixed";
+            document.body.style.backgroundSize = "cover";
+            document.getElementById('app').innerHTML = `
+                <p>¡Buena elección!</p>
+                <button onclick="startSequence()">Continuar</button>
+            `;
+        }
+
+        const messages = [
+            "Que estas fiestas traigan mucha alegría.",
+            "Y que los buenos momentos se multipliquen.",
+            "Y que no te vuelvas más gilip*oll*s, en el fondo me caes bien."
+        ];
+        let currentIndex = 0;
+
+        function showNext() {
+            if (currentIndex < messages.length) {
+                const message = messages[currentIndex];
+                document.getElementById('app').innerHTML = `
+                    <p>${message}</p>
+                    <button onclick="showNext()">Siguiente</button>
+                `;
+                currentIndex++;
+            } else {
+                document.getElementById('app').innerHTML = `
+                    <h1>¡Feliz Navidad!</h1>
+                    <p>Espero que disfrutes mucho de estas fiestas.</p>
+                `;
+            }
+        }
+
+        function startSequence() {
+            currentIndex = 0; // Reinicia la secuencia
+            showNext(); // Comienza la secuencia
+        }
+    </script>
+</body>
+</html>
